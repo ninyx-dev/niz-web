@@ -1,0 +1,95 @@
+{% if tours %}
+
+
+{% for tour in tours %}
+ 
+<script type="text/javascript" > 
+
+
+	// var recommand_type1 = "{{tour.recommand_type1}}";
+	// var recommand_type2 = "{{tour.recommand_type2}}";
+	// var recommand_type3 = "{{tour.recommand_type3}}";
+	
+	// var recommand_type4 = '{{tour.recommand_type4}}';
+// 	
+	// if( $('#recommand_type1').attr('src') == "/site_media/mobile/images/icon_00.png")
+	// {
+		// $('#recommand_type1').attr('src', "" );
+	// }else{
+		// $("#recommand_type1").show();
+	// }
+// 	
+	
+	
+	//$("#send_req_true_submit").click(send_req_true_submit);
+</script>
+
+<ul>
+	<!-- List 01 -->
+	<li>
+		<dl class="list">
+			<!-- The HTML -->
+			<dt>
+				<a href="/app/detail/{{tour.id}}"><p style="width:320px;overflow:hidden; white-space:nowrap;text-overflow:ellipsis ">{{tour.title|escape}}</p></a>
+			</dt>
+			<dd>
+				<div class="imgfr">
+					<div class="imgreal">
+						<h1><img src="/site_media/mobile/images/icon_{{tour.tour_type}}.png" alt="아이콘" /></h1>
+
+						{% if tour.photo|escape %}
+							<img src="/app{{tour.thumbnail|escape}}" style="width: 119px; height: 64px;" alt="sample" />
+						{% else %}
+							<img src="/site_media/mobile/images/default.png" style="width: 119px; height: 64px;" alt="sample" />
+						
+						{% endif %}
+					
+					</div>
+				</div>
+				<div class="info">
+					<ul>
+						<li>
+							<h1>출발일</h1>
+							<p>
+								{{tour.start_dates|escape|slice:":14"}}
+							</p>
+						</li>
+						<li>
+							<h1>땡가격</h1>
+							<p class="price">
+								{{tour.price}}원
+							</p>
+						</li>
+						<li>
+							<h1>행사진행</h1>
+							<p>
+								{{tour.responsible_company}}
+							</p>
+						</li>
+						<li class="icon">
+							<img src="/site_media/mobile/images/icon_{{tour.recommand_type1}}.png" alt="아이콘" id="recommand_type1"/>
+							<img src="/site_media/mobile/images/icon_{{tour.recommand_type2}}.png" alt="아이콘" id="recommand_type2"/>
+							<img src="/site_media/mobile/images/icon_{{tour.recommand_type3}}.png" alt="아이콘" id="recommand_type3"/>
+							<img src="/site_media/mobile/images/icon_{{tour.recommand_type4}}.png" alt="아이콘" id="recommand_type4"/>
+						</li>
+					</ul>
+					
+				</div>
+			</dd>
+		</dl>
+	</li>
+	{%endfor%}
+</ul>
+{% else %}
+<ul>
+	<li>
+		<dl class="list">
+			<dt>
+				<p>
+					조회된 여행이 없습니다.
+				</p>
+			</dt>
+		</dl>
+	</li>
+</ul>
+{% endif %} 

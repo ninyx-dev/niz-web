@@ -1,0 +1,43 @@
+
+/* The CSS */
+select {
+
+	background-color:#d6ecdc; color:#3c3c3c; 
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none; 
+    cursor:pointer;
+    
+    float:left; 
+    width:80px; 
+	font-weight:bold; text-align:center; 
+	font-size:12px; solid #b2b9b4;
+	position:relative;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+    select {padding-right:18px}
+    label {position:relative}
+    label:after {
+/*        content:'<>';*/
+        font:11px "Consolas", monospace;
+        color:#aaa;
+        -webkit-transform:rotate(90deg);
+        position:absolute;
+        right:4px;
+        top:2px;
+        padding:0 0 2px;
+        border-bottom:1px solid #ddd;
+    }
+}
+
+input[type=search] {
+        color: black;
+        cursor: pointer;
+        width: 80%;
+        height: 22px;
+        font-size:14px; 
+        letter-spacing: 2px;
+        text-shadow: 0 0 1px black;
+        word-spacing: 20px;margin-top:10px; 
+}

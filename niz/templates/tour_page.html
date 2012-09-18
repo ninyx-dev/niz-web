@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+{% load comments i18n %}
+
+{% block title %}북마크 : {{ shared_tour.tour.title|escape}}{% endblock %}
+
+{% block head %} <a href="/vote/?id={{ shared_tour.id }}" class="vote">[+]</a>
+<a href="{{shared_tour.link.url}}" class="title">{{shared_tour.tour.title|escape}}</a>
+{% endblock %}
+{% block content %}
+
+	추가한 사용자: <a href="/user/{{shared_tour.tour.user_id.username}}/" class="username"> 
+	{{shared_tour.tour.user_id.username}} </a> | 
+	<span class="vote-count">Votes: {{ shared_tour.votes }}</span>
+	
+	<h2>댓글</h2>
+	{% get_comment_count for niz.sharedtour shared_tour.id as comment_count %}
+  	{% get_comment_list for niz.sharedtour shared_tour.id as comment_list %}
+
+	{% for comment in comment_list %}
+	<div class = "comment">
+		<p><b>{{comment.user_name}}</b>의 댓글 : </p>
+		{{ comment.comment|escape|urlizetrunc:40|linebreaks }}
+	</div>
+	{% endfor %}
+	<p>댓글 개수 : {{ comment_count }} </p>
+	{% render_comment_form for niz.sharedtour shared_tour.id %}
+	
+	
+{% endblock %} 

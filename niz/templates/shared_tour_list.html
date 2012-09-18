@@ -1,0 +1,25 @@
+
+{% if shared_tours %}
+<ul class="tours">
+	{% for shared_tour in shared_tours %}
+	<li>
+		<a href="/vote/?id={{shared_tour.id}}" class="vote">[+]</a>
+		<a href="{{shared_tour.tour.link.url|escape}}" class="title">
+			{{shared_tour.tour.title|escape}}</a>
+		{% if show_edit %}
+		<a href="/save/?url={{shared_tour.tour.link.url|urlencode}}" class="edit">[수정]</a>
+		{% endif %}
+		<br/>
+			추가한 사용자: <a href="/user/{{shared_tour.tour.user_id.username}}/" class="username"> 
+				{{shared_tour.tour.user_id.username}} </a> |
+				<span class="vote-count">Votes: {{ shared_tour.votes }}</span>|
+				<a href="/tour/{{shared_tour.id}}/">댓글</a>
+
+	</li>
+	{% endfor %}
+</ul>
+{% else %}
+<p>
+	땡처리 여행이 없습니다.
+</p>
+{% endif %}

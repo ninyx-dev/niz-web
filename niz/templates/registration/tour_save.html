@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}저장{% endblock %}
+
+{% block external%}
+<link rel="stylesheet" href="/site_media/auto_complete/jquery.autocomplete.css" type="text/css" ></css>
+<script type="text/javascript" src="/site_media/auto_complete/jquery.dimensions.js"></script>
+<script type="text/javascript" src="/site_media/auto_complete/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="/site_media/auto_complete/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/site_media/auto_complete/tag_autocomplete.js"></script>
+ 
+{% endblock %}
+{% block head %}저장하세요{% endblock %}
+
+{% block content %}
+{% include 'registration/tour_save_form.html' %}
+{% endblock %}

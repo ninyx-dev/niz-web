@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		
+		  <meta charset="utf-8" /> 
+  <meta name="description" content="Niz tour" /> 
+  <meta name="keywords" content="tour, niz" /> 
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <script type="text/javascript" src="/site_media/google-analytics.js"></script>
+		
+ <!--  <link rel="stylesheet" media="all" href="/site_media/css/base.min.css" /> 
+  <link rel="stylesheet" media="only screen and (max-width: 800px)" href="/site_media/css/mobile.min.css" /> 
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" /> 
+ 
+  <!-- iOS: run in full-screen mode and display upper status bar as translucent --> 
+  <!--<meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />--> 
+ 
+  <link rel="apple-touch-icon" href="/site_media/Icon_64.png" /> 
+  <link rel="apple-touch-icon-precomposed" href="/site_media/Icon_64.png" /> 
+<!--  
+  <link rel="stylesheet"
+  media="handheld, only screen and (max-device-width: 320px)" href="phone.css">
+<link rel="stylesheet"
+  media="only screen and (min-width: 641px) and (max-width: 800px)" href="ipad.css">
+
+
+  <link rel="stylesheet" media="screen" href="/static/css/index_page.min.css" /> 
+  <link rel="stylesheet" media="only screen and (max-width: 640px)" href="/static/css/index_page_mobile.min.css" /> 
+ -->
+		
+		<link rel="stylesheet" href="/site_media/style.css" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<title>{% block title %}{% endblock %}</title>
+		
+		{% block external %}{%endblock%}
+	</head>
+	<body>
+		<div id="nav">
+			<a href="/">home</a> |
+			<a href="/popular">인기</a> | 
+			<a href="/save">추가</a> | 
+			<a href="/search">검색</a> | 
+			{% if user.is_authenticated %}
+			{{user.username}}님, 안녕하세요 (<a href="/logout">로그아웃</a>)
+			{% else %} <a href="/login">로그인</a><a href="/register">가입</a>
+			{% endif %}
+		</div>
+		<h1>{% block head %}{%endblock%}</h1>
+		{% block content %}{%endblock%}
+	</body>
+</html>

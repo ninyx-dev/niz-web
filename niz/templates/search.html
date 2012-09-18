@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}검색{% endblock%}
+{% block external%}
+<script type="text/javascript" src="/site_media/search.js"></script>
+{% endblock %}
+{% block head %}검색{%endblock%}
+{% block content %}
+<form id="search-form" method="get" action=".">
+	{{form.as_p}}
+
+<input type="submit" value="검색"/>
+</form>
+<div id="search-results">
+	{% if show_results %}
+		{% include 'tour_list.html' %}
+	{% endif %}
+</div>
+{% endblock %} 

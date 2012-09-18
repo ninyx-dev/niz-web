@@ -1,0 +1,62 @@
+{% extends "mobile/base.html" %}
+
+{% block title %}트위투어{% endblock %}
+
+{% block external%}
+<script type="text/javascript">
+	function search_submit() {
+		
+		var query = $('#search_text').val()
+		$("#mBody").load("/m/search/?ajax&query=" + encodeURIComponent(query) );
+		
+		return false;
+	};
+	
+	$(document).ready(function() {
+		// $("#select_package").onclick(search_submit);
+	});
+</script>
+{% endblock %}
+
+{% block menu %} <!-- Menu -->
+<div id="Menu">
+	<ul>
+		<li>
+			<p>
+				<a href="/app/list">땡처리 여행</a>
+			</p>
+		</li>
+		<li>
+			<p>
+				<a href="/app/recommand">추천 여행</a>
+			</p>
+		</li>
+		<li class="this">
+			<p>
+				<a href="/app/search">검색</a>
+			</p>
+		</li>
+	</ul>
+</div>
+{% endblock %}
+{% block content %}
+<div id="Submenu">
+	<ul>
+<input type=search id="search_text">
+<a class="button" href="#" onclick="search_submit();"> Search </a> 
+<!-- <button class="button"> Go </button>
+<form class="search" action="">
+<input type="text" class="text-field"/>
+<input type="submit" class="button" value="submit" />
+<a class="button" href="#" onclick="this.blur();"> search </a>
+
+
+</form> -->
+
+	</ul>
+</div>
+<!-- Body -->
+<div id="mBody">
+	{% include "mobile/tour_list.html" %}
+</div>
+{%endblock%}

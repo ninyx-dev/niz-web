@@ -1,0 +1,350 @@
+{% extends "mobile/base.html" %}
+
+{% block title %}{{tour.title|escape}}{% endblock %}
+
+{% block external%} 
+<!-- test code
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAUOfYB56W9w6tqlhW7mMRahTHppAiNYdqPasButIo4lY8cbO7-BQUEmRqyb7P0zDtgE4s541_N_9Lug" type="text/javascript">
+-->
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyAcrFQNpe3GXocy_VTpYaZ2pF5tL07a42w" type="text/javascript">
+
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript"  src="http://malsup.github.com/jquery.form.js"></script>
+<script type="text/javascript">
+	function send_req_false_submit() {
+
+		var subscription_name = $('#subscription_name').val()
+		var subscription_tel = $('#subscription_tel').val()
+		var subscription_start_date = $('#subscription_start_date').val()
+		var subscription_email = $('#subscription_email').val()
+		var tour_id = $('#tour_id').val()
+
+		if(subscription_name == '') {
+			alert('이름을 입력해 주십시요');
+			return;
+		};
+
+		if(subscription_tel == '') {
+			alert('연락처를 입력해 주십시요');
+			return;
+		};
+		$.get("/m/register_subscription/?ajax&name=" + encodeURIComponent(subscription_name) + "&tel=" + encodeURIComponent(subscription_tel) + "&start_date=" + encodeURIComponent(subscription_start_date) + "&email=" + encodeURIComponent(subscription_email) + "&tour_id=" + encodeURIComponent(tour_id) + "&isBooking=" + encodeURIComponent("F"), function(data) {
+			$('.result').html(data);
+			alert(data);
+			history.back();
+		});
+		return false;
+	}
+
+	function send_req_true_submit() {
+
+		var subscription_name = $('#subscription_name').val()
+		var subscription_tel = $('#subscription_tel').val()
+		var subscription_start_date = $('#subscription_start_date').val()
+		var subscription_email = $('#subscription_email').val()
+		var tour_id = $('#tour_id').val()
+
+		if(subscription_name == '') {
+			alert('이름을 입력해 주십시요');
+			return;
+		};
+
+		if(subscription_tel == '') {
+			alert('연락처를 입력해 주십시요');
+			return;
+		};
+
+		$.get("/m/register_subscription/?ajax&name=" + encodeURIComponent(subscription_name) + "&tel=" + encodeURIComponent(subscription_tel) + "&start_date=" + encodeURIComponent(subscription_start_date) + "&email=" + encodeURIComponent(subscription_email) + "&tour_id=" + encodeURIComponent(tour_id) + "&isBooking=" + encodeURIComponent("T"), function(data) {
+			$('.result').html(data);
+			alert(data);
+
+			history.back();
+		});
+		return false;
+	}
+
+	function commify(n) {
+		var reg = /(^[+-]?\d+)(\d{3})/;
+		// 정규식
+		n += '';
+		// 숫자를 문자열로 변환
+
+		while(reg.test(n))
+		n = n.replace(reg, '$1' + ',' + '$2');
+
+		return n;
+	}
+
+	$(document).ready(function() {
+		//
+		// $("#price").text( commify({{tour.price|escape}}) + '원');	$("#doajaxgetcall").click(send_req_submit);
+
+		$("#send_req_false_submit").click(send_req_false_submit);
+		$("#send_req_true_submit").click(send_req_true_submit);
+
+		$("#price1").html('{{tour.price_discount|escape}}' + '원');
+		$("#price2").html('{{tour.price|escape}}' + '원');
+
+		//android ios download btn
+		var ua = navigator.userAgent.toLowerCase();
+		var isAndroid = ua.indexOf("android") > -1;
+		//&& ua.indexOf("mobile");
+		if(isAndroid) {
+		} else {
+			$("#android_download").hide();
+		}
+
+		var ua = navigator.userAgent;
+		var isiPad = /iPad/i.test(ua) || /iPhone OS 3_1_2/i.test(ua) || /iPhone OS 3_2_2/i.test(ua);
+		if(isiPad) {
+		} else {
+			$("#ios_download").hide();
+		}
+
+		if("{{tour.gps|escape}}" == "") {
+			$("#map").hide();
+		} else {
+			//gps map
+			var map = new GMap2(document.getElementById("map"));
+
+			// Add 10 markers to the map at random locations
+			var bounds = map.getBounds();
+			var southWest = bounds.getSouthWest();
+			var northEast = bounds.getNorthEast();
+			var lngSpan = northEast.lng() - southWest.lng();
+			var latSpan = northEast.lat() - southWest.lat();
+
+			var gpss = "{{tour.gps|escape}}".split(';');
+			//37.56647, 126.977963
+
+			// var gpss = "37.56647,126.977963;37.56647,126.978963".split(';');
+			for( i = 0; i < gpss.length; i++) {
+
+				var gps = gpss[i].split(',');
+				//if(i == 0) {
+					map.setCenter(new GLatLng(gps[0], gps[1]), 15);
+					// Select a map type which supports obliques
+					map.setMapType(G_HYBRID_MAP);
+					map.setUIToDefault();
+
+					// Enable the additional map types within
+					//the map type collection
+					map.enableRotation();
+				//} else {
+					var point = new GLatLng(gps[0], gps[1]);
+					map.addOverlay(new GMarker(point, {
+						title : "name"
+					}));
+				//}
+			}
+		}
+
+	});
+
+</script>
+<style type='text/css'>
+	.social-media {
+		width: 320px;
+		height: 42px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+
+</style>
+</head> <!-- 	<body onload="load()" onunload="GUnload()"> -->
+{% endblock %}
+
+{% block menu %} <!-- Menu -->
+<!--{% include "mobile/menu.html" %} -->
+{% endblock %}
+{% block content %} <!-- Body -->
+<div id="mBody" >
+	
+	<div class="mWrap">
+		<div class="pImg">
+			<div class="pImgreal">
+				<h1><img src="/site_media/mobile/images/icon_{{tour.tour_type}}.png" alt="icon" /></h1>
+<!-- 				<img src="{{tour.photo|escape}}.png" style="width: 295px; height: 160px"="sample" /> -->
+				{% if tour.photo %}
+					<img src="/app/{{tour.photo|escape}}" style="width: 295px; height: 160px"="sample" />
+				{% else %}
+					<img src="/site_media/mobile/images/default02.png"style="width: 295px; height: 160px"="sample" />
+				{% endif %}
+			</div>
+			
+		</div>
+		
+		
+		<div class="infoSub">
+				<h1 class="date" style="width: 100px;">등록일 : {{tour.create_dt|date:"m월 d일"|escape}}</h1>
+				<ul>
+					<li>
+						<h1>상품가</h1>
+						<p class="price2" id="price2"></p>
+					</li>
+					<li>
+						<h1>땡가격</h1>
+						<p class="price" id="price1">
+							{{tour.price_discount|escape}}원
+						</p>
+					</li>
+					<li>
+						<h1>출발일</h1>
+						<p>
+							{{tour.start_dates|escape|slice:":14"}}
+						</p>
+					</li>
+					<li>
+						<h1>행사진행</h1>
+						<p>
+							{{tour.responsible_company|escape}}
+						</p>
+					</li>
+					<li class="icon">
+						<img src="/site_media/mobile/images/icon_{{tour.recommand_type1}}.png" alt="아이콘" />
+						<img src="/site_media/mobile/images/icon_{{tour.recommand_type2}}.png" alt="아이콘" />
+						<img src="/site_media/mobile/images/icon_{{tour.recommand_type3}}.png" alt="아이콘" />
+						<img src="/site_media/mobile/images/icon_{{tour.recommand_type4}}.png" alt="아이콘" />
+					</li>
+			</div>
+		<div class="contents">
+			<h1>상세내용</h1>
+			<p>
+				{{tour.description|safe|linebreaks}}
+				<br>
+			</p>
+		</div>
+		<div class="line2"></div>
+		<div class="contents">
+			<h1>포함사항</h1>
+			<p>
+				{{tour.included_desc|safe|linebreaks}}
+			</p>
+		</div>
+		<div class="line2"></div>
+		<div class="contents">
+			<h1>불포함사항</h1>
+			<p>
+				{{tour.excluded_desc|escape|safe|linebreaks}}
+			</p>
+		</div>
+		<div class="line2"></div>
+		<!-- 					<div class="map">
+		<img src="/site_media/mobile/images/googlemap.jpg" alt="map" />
+		</div> -->
+		<div id="map" class="map" ></div>
+		<div class="line2"></div>
+		<div class="contents">
+			<h1 >고객센터</h1>
+			<h1 class="tel"><a href="tel:{{tour.tel.tel|escape}}">{{tour.tel.tel|escape}}</a></h1>
+			<h1 class="telbtn"><a href="tel:{{tour.tel.tel|escape}}"><img src="/site_media/mobile/images/btn_call.jpg" alt="tel" /></a></h1>
+		</div>
+		<div class="line2"></div>
+		<div class="contents">
+			<a href="{{tour.url_link|escape}}" ><h1>상세일정표보기</h1></a>
+		</div>
+		<div class="line2"></div>
+		<div class="tarea" id="mobile_download">
+			<a href="https://play.google.com/store/apps/details?id=com.NizApp&feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5OaXpBcHAiXQ.."  id="android_download"> <img src="/site_media/mobile/images/and_down.jpg" alt="install" /></a>
+			<a href="http://itunes.apple.com/kr/app/ttaengcheoliyeohaeng-gongjjayeohaeng/id385896740?mt=8" id="ios_download"> <img src="/site_media/mobile/images/iphone_down.jpg" alt="install" /></a>
+		</div>
+		<div class="line"></div>
+		{% include "mobile/menu.html" %}
+		{% include "mobile/google_docs_forms.html" %}
+		<!--
+		<div class="infoR">
+			<input type="hidden" name="tour_id" id="tour_id" value="{{tour.id}}" />
+			<ul>
+				<li>
+					<h1>예약자*</h1>
+					<p>
+						<input type="text" name="subscription_name" id="subscription_name" class="itext" />
+					</p>
+				</li>
+				<li>
+					<h1>연락처*</h1>
+					<p>
+						<input type="text" name="subscription_tel" id="subscription_tel" class="itext" />
+					</p>
+				</li>
+				<li>
+					<h1>여행일</h1>
+					<p>
+						<input type="text" name="subscription_start_date" id="subscription_start_date" class="itext" />
+					</p>
+				</li>
+				<li>
+					<h1>예매일</h1>
+					<p>
+						<input type="text" name="subscription_email" id="subscription_email" class="itext" />
+					</p>
+					
+				</li>
+				<li style="height:70px;">
+					<p style="width:80%;">
+						<a href="#"><img src="/site_media/mobile/images/btn_request.jpg" alt="reserv" id="send_req_false_submit" /></a>
+						<a href="#" ><img src="/site_media/mobile/images/btn_reservation.jpg" alt="reserv" id="send_req_true_submit"/></a>
+					</p>
+				</li><h2 style="margin-top:-15px; margin-bottom: 10px; color:#37849B; font-weight: bold;">전화번호를 남겨주시면 콜센터에서 전화 드립니다. 부담없이 신청해주세요.</h2>
+				
+				
+			</ul>
+		</div>
+		-->
+		</br>
+		<!-- <div class="banner">
+		<img src="/site_media/mobile/images/samplebanner.jpg" alt="banner" />
+		</div>-->
+		<div id="social"></div>
+		<!-- Social Media buttons -->
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+			{ parsetags:'explicit'
+			}
+		</script>
+		<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+		<div class="social-media">
+			<!-- Twitter Button code adapted from http://www.palitsyn.com/blog/squiz-suite/tweet-button-mysource-matrix-squiz-matrix-and-valid-html -->
+			<div style="float:left;width:105px;margin-left:30px;">
+				<a href="http://twitter.com/share?url={{tour.my_short_url|escape}}&amp;text={{tour.title|escape}}&amp;via=niztour&amp;count=horizontal" class="twitter-share-button" rel="nofollow">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+			</div>
+			<!-- Google +1 code adapted from http://www.gabsoftware.com/tips/how-to-produce-valid-google-1-buttons/-->
+			<div style="float:left;width:70px;">
+				<div id="plusone-div"></div>
+				<script type="text/javascript">
+					gapi.plusone.render('plusone-div', {
+						"size" : "medium",
+						"count" : "true"
+					});
+
+				</script>
+			</div>
+			<!-- Facebook button code adapted from http://stackoverflow.com/questions/4774569/facebook-likebox-allowtransparency-gives-invalid-xhtml-in-w3c-validator -->
+			<div style="float:left;width:80px;">
+				<!--[if IE]>
+				<iframe src="http://www.facebook.com/plugins/like.php?href=http://code.adonline.id.au/valid-twitter-google-facebook-buttons/%2F&amp;layout=button_count&amp;show_faces=true&amp;width=300&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px;" allowTransparency="true"></iframe>
+				<![endif]-->
+				<!--[if !IE]>-->
+				<!--<iframe src="http://www.facebook.com/plugins/like.php?href=http://ninyx22.cafe24.com/m/detail/1/#&amp;layout=button_count&amp;show_faces=true&amp;width=300&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px;"></iframe> -->
+				<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+				<div class="fb-like" data-href="{{tour.my_short_url|escape}}" data-layout="button_count" data-show-faces="false" ></div>
+				<!--<![endif]-->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end Floating social media buttons by www.howbler.com -->
+<!-- 페이스북 소셜댓글 시작 -->
+<div id="fb-root" style="width: 320px; margin:0 auto;" >
+	<script src="http://connect.facebook.net/en_US/all.js#appId=275589055797521&xfbml=1"></script>
+	<fb:comments href="{{tour.my_short_url|escape}}" num_posts="5" width="320px";  margin-left: auto ; margin-right: auto ;></fb:comments>
+</div>
+<div class="line2"></div>
+<!-- Footer -->
+<div id="mFooter" >
+	<div class="mWrap">
+		<h1><span>COPYRIGHT 2011 TWITOUR, INC.</span></h1>
+	</div>
+</div>
+{%endblock%} 

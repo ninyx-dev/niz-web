@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tours>
+{% if tours %}
+	{% for tour in tours %}
+	<tour>
+		<title>{{tour.title}}</title>
+		<id>
+			{{tour.id}}
+		</id>
+		<url_link>
+			<![CDATA[{{tour.url_link}}]]>
+		</url_link>
+		<short_url>
+			<![CDATA[{{tour.short_url}}]]>
+		</short_url>
+		<type_package>
+			{{tour.type_package}}
+		</type_package>
+		<tour_type>
+			{{tour.tour_type}}
+		</tour_type>
+		<start_dates>
+			{{tour.start_dates|escape}}
+		</start_dates>
+		<price>
+			{{tour.price}}
+		</price>
+		<price_discount>
+			{{tour.price_discount}}
+		</price_discount>
+		<start_dates>
+			{{tour.start_dates}}
+		</start_dates>
+		<responsible_company>
+			{{tour.responsible_company}}
+		</responsible_company>
+		<recommand_type>
+			{{tour.recommand_type}}
+		</recommand_type>
+		<tour_type>
+			{{tour.tour_type}}
+		</tour_type>
+		<create_dt>
+			{{tour.create_dt}}
+		</create_dt>
+		<update_dt>
+			{{tour.update_dt}}
+		</update_dt>
+		<description>
+			<![CDATA[{{tour.description}}]]>
+		</description>
+		<included_desc>
+			<![CDATA[{{tour.included_desc}}]]>
+		</included_desc>
+		<excluded_desc>
+			<![CDATA[{{tour.excluded_desc}}]]>
+		</excluded_desc>
+		<tel>
+			{{tour.tel}}
+		</tel>
+		<photo>
+			<![CDATA[{{tour.photo}}]]>
+		</photo>
+		<thumbnail>
+			<![CDATA[{{tour.thumbnail}}]]>
+		</thumbnail>
+		<isRecomand>
+			{{tour.isRecomand}}
+		</isRecomand>
+	</tour>
+	{% endfor %}
+{% endif %}
+</tours>

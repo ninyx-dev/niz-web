@@ -1,0 +1,128 @@
+{% extends "mobile/base.html" %}
+
+{% block title %}트위투어{% endblock %}
+
+{% block external%}
+<script type="text/javascript">
+	function search_submit() {
+		//alert($('#select_region option:selected').text());
+
+		var query_region = $('#select_region option:selected').text()
+		var query_package = $('#select_package option:selected').text()
+		var query_foreign = $('#select_foreign option:selected').text()
+		$("#mBody").load("/m/list/?ajax&query_region=" + encodeURIComponent(query_region) + "&query_package=" + encodeURIComponent(query_package) + "&query_foreign=" + encodeURIComponent(query_foreign));
+		return false;
+	};
+</script>
+<script typ="text/javascript">
+	$(document).ready(function() {
+
+	$("#select_foreign").children().remove();
+	$("#select_region").children().remove();
+	$("#select_package").children().remove();
+
+	//submenu object
+	$("#select_foreign").append('<option value="전체">전체</option>');
+	$("#select_region").append('<option value="전체">전체</option>');
+	$("#select_package").append('<option value="전체">전체</option>');
+
+	{% for submenu in submenus %}
+	$('#select_foreign').find('option:contains({{submenu.foreign_type}})').remove();
+	$("#select_foreign").append('<option value="' + "{{submenu.foreign_type}}" + '">' + "{{submenu.foreign_type}}" + '</option>');
+
+	// $('#select_region').find('option:contains({{submenu.region}})').remove();
+	// $("#select_region").append('<option value="' + "{{submenu.region}}" + '">' + "{{submenu.region}}" + '</option>');
+
+	{% endfor %}
+
+	$("#select_foreign").change(function() {
+	$("#select_region").children().remove();
+	$("#select_region").append('<option value="전체">전체</option>');
+	$("#select_package").children().remove();
+	$("#select_package").append('<option value="전체">전체</option>');
+
+	{% for submenu in submenus %}
+	if ($('#select_foreign option:selected').text() == "{{submenu.foreign_type}}") {
+	$('#select_region').find('option:contains({{submenu.region}})').remove();
+	$("#select_region").append('<option value="' + "{{submenu.region}}" + '">' + "{{submenu.region}}" + '</option>');
+	}
+
+	{% endfor %}
+
+	});
+
+	$("#select_region").change(function() {
+	$("#select_package").children().remove();
+	$("#select_package").append('<option value="전체">전체</option>');
+
+	{% for submenu in submenus %}
+	if ($('#select_region option:selected').text() == "{{submenu.region}}") {
+	$('#select_package').find('option:contains({{submenu.name}})').remove();
+	$("#select_package").append('<option value="' + "{{submenu.name}}" + '">' + "{{submenu.name}}" + '</option>');
+	}
+
+	{% endfor %}
+
+	});
+
+	$("#select_package").change(search_submit);
+
+	});
+</script>
+{% endblock %}
+
+{% block menu %} 
+<div id="Menu">
+	<ul>
+		<li>
+			<p>
+				<a href="/app/list">땡처리 여행</a>
+			</p>
+		</li>
+		<li class="this">
+			<p>
+				<a href="/app/recommand">추천 여행</a>
+			</p>
+		</li>
+		<li>
+			<p>
+				<a href="/app/search">검색</a>
+			</p>
+		</li>
+	</ul>
+</div>
+{% endblock %}
+{% block content %}
+<div id="Submenu">
+	<ul>
+		<li>
+			<h1>해외/국내/항공권</h1>
+			<div>
+				<select class="arrow" id="select_foreign"></select>
+			</div>
+			<div class="arrow"><img src="/site_media/mobile/images/ico_arrow.png" alt="arrow" />
+			</div>
+		</li>
+		<li>
+			<h1>지역별 검색</h1>
+			<div>
+				<select class="arrow" id="select_region" ></select>
+			</div>
+			<div class="arrow"><img src="/site_media/mobile/images/ico_arrow.png" alt="arrow" />
+			</div>
+		</li>
+		<li>
+			<h1>테마별 검색</h1>
+			<div>
+				<select class="arrow" id="select_package"></select>
+			</div>
+			<div class="arrow"><img src="/site_media/mobile/images/ico_arrow.png" alt="arrow" />
+			</div>
+		</li>
+	</ul>
+</div>
+<!-- Body -->
+<div id="mBody">
+	{% include "mobile/tour_list.html" %}
+</div>
+{%endblock%}

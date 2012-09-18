@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}장고 북마크에 오신것을 환영합니다.{% endblock%}
+
+{% block external %} <script type="text/javascript" src="/site_media/tour_edit.js"></script>
+{% endblock %}
+
+{% block head %}{{username}}의 투어 목록입니다.{%endblock%}
+{% block content %}
+{% include "tour_list.html" %}
+{% endblock %} 

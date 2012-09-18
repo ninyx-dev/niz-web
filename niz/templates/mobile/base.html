@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;" />
+		<link rel="stylesheet" type="text/css" href="/site_media/mobile/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/site_media/mobile/css/style.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+		<link type="text/css" rel="stylesheet" href="/site_media/mobile/css/main-VERSION.css" charset="utf-8" />
+		<!-- 	<link type="text/css" rel="stylesheet" href="/site_media/mobile/css/screen.css" charset="utf-8" /> -->
+		<!--   <script type="text/javascript" src="/site_media/mobile/js/main-VERSION.js"></script> -->
+		<script type="text/javascript" src="/site_media/google-analytics.js"></script>
+		<title>{% block title %}{% endblock %}</title>
+		{% block external %}{%endblock%}
+	</head>
+	<body >
+		<div id="wrap">
+			<!-- Header -->
+			<div id="mHeader">
+				<div class="mWrap" >
+					<div class="base_title" style="text-align: center;">
+							{% if tours  %} 
+							<h1 style="width=100%;  ">
+								<a href="/"> 
+									<img style=" align='center'" src="/site_media/mobile/images/logo.png" alt="로고" />
+								</a>
+							</h1>
+							{% else %}
+							<h1 style="width=100%;  top:6px; ">
+								<a href="/" style="color:white; font-weight:bold; text-align:center;"> 
+<!-- 									<p style="width:320px;overflow:hidden; white-space:nowrap;text-overflow:ellipsis ">{{tour.title|escape}}</p> -->
+									<marquee direction="right">{{tour.title|escape}}</marquee>
+								</a>
+							</h1>
+							{% endif %}
+					</div>
+					
+					<div class="back">
+						<a href="javascript:;" onclick="history.go(-1)"><img src="/site_media/mobile/images/btn_back.png" alt="뒤로가기" /></a>
+					</div>
+					<div class="news">
+						<a href="http://twitour.cafe24.com/n_news/main/index.html" >Times</a>
+					</div>
+				</div>
+			</div>
+			{% block menu %}{%endblock%}
+
+			{% block content %}{%endblock%}
+		</div>
+	</body>
+</html>
