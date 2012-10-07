@@ -18,12 +18,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'mobile',                      # Or path to database file if using sqlite3.
-        'USER': 'evens',                      # Not used with sqlite3.
-        'PASSWORD': 'evens1025',                  # Not used with sqlite3.
-        #'ENGINE': 'django.db.backends.sqlite3', 
-        #'NAME': '/var/www/django/nizapp/sqlite.db',                      # Or path to database file if using sqlite3.
+        #'ENGINE': 'django.db.backends.mysql', 
+        #'NAME': 'mobile',                      # Or path to database file if using sqlite3.
+        #'USER': 'evens',                      # Not used with sqlite3.
+        #'PASSWORD': 'evens1025',                  # Not used with sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', 
+        'NAME': './sqlite.db',                      # Or path to database file if using sqlite3.
         #'USER': '',                      # Not used with sqlite3.
         #'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
